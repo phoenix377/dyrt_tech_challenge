@@ -4,6 +4,7 @@
   width: 25%;
   height: 100%;
   background-color: $cNOffWhite;
+  position: relative;
 }
 
 .sidebar__content {
@@ -12,8 +13,6 @@
 }
 
 .search {
-  position: relative;
-
   &__input-container {
     border-radius: 3px;
     background-color: $cNWhite;
@@ -41,14 +40,16 @@
 
     position: absolute;
     background-color: $cNWhite;
-    width: 100%;
     min-height: 3rem;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     box-shadow: 0 0 12px rgba($cNOffBlack, 0.2);
     padding: 0.5rem;
     cursor: pointer;
-
+    right: 16px;
+    left: 16px;
+    max-height: calc(100% - 60px);
+    overflow: scroll;
     &--active {
       display: block;
     }

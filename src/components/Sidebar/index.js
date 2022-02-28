@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import searchResults from '../../data/searchResults';
 import { log } from '../../utils/logToAnalytics';
 
 import styles from './Sidebar.module.scss';
 
-export const Sidebar = ({
-  setSelectedCampgroundId,
-  results,
-  setResults,
-  query,
-  setQuery,
-}) => {
+export const Sidebar = (props) => {
+  const {
+    setSelectedCampgroundId,
+    results,
+    setResults,
+    query,
+    setQuery,
+  } = props;
   const [showMenu, setShowMenu] = useState(false);
   const [loading, setLoading] = useState();
   const [result, setResult] = useState();
@@ -21,26 +21,29 @@ export const Sidebar = ({
     }
   }, [result]);
 
+  const fetchCampgrounds = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`https://staging.thedyrt.com/api/v5/autocomplete/campgrounds?q=${query}`);
+      if (res.status === 200) {
+        const data = await res.json();
+        setResults(data);
+      }
+    } catch (e) {
+      console.log(e, '====> e <====');
+    }
+    setLoading(false);
+  }
+
   useEffect(() => {
     if (query) {
-      /*
-        TODO load results from https://staging.thedyrt.com/api/v5/autocomplete/campgrounds with
-        the query parameter `q`
-      */
-      setLoading(true);
-
-      setTimeout(() => {
-        setResults(
-          searchResults.filter((result) => result.name.includes(query))
-        );
-        setLoading(false);
-      }, 500);
+      fetchCampgrounds();
     }
   }, [query]);
 
   const logToAnalytics = useCallback(() => {
     log('search-dropdown-enter', results);
-  }, []);
+  }, [results]);
 
   return (
     <div className={styles['sidebar']}>
