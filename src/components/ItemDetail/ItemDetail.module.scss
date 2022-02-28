@@ -1,0 +1,19 @@
+@import '../../styles/styles.scss';
+
+.item-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin: 10px;
+
+  &__title {
+    @include fBody('md', 'bold');
+    color: black;
+  }
+
+  &__detail {
+    @include fBody('md');
+    color: #313131;
+    margin: 0 5px;
+  }
+}

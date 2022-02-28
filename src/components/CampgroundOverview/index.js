@@ -27,6 +27,9 @@ const CampgroundOverview = (props) => {
           <img src={campground.photoUrl} alt={campground.name}/>
         }
         <h2>{campground?.name}</h2>
+        <h3>Coordinates</h3>
+        <ItemDetail title="latitude:" detail={campground?.latitude} />
+        <ItemDetail title="longitude:" detail={campground?.longitude} />
       </div>
     </div>
   );
