@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { log } from '../../utils/logToAnalytics';
 
 import styles from './Sidebar.module.scss';
@@ -65,6 +65,20 @@ export const Sidebar = (props) => {
     }
   };
 
+  const renderList = useMemo(
+    () => results.map((result, index) => <div
+      key={index}
+      className={styles['search__dropdown__item']}
+      onClick={() => {
+        setResult(result);
+        setActiveItem(index)
+      }}
+    >
+      <p className={activeItem === index ? styles['search__dropdown__item-active'] : ''}>{result.name}</p>
+    </div>),
+    [activeItem],
+  );
+
   return (
     <div className={styles['sidebar']}>
       <div className={styles['sidebar__content']}>
@@ -93,20 +107,7 @@ export const Sidebar = (props) => {
           >
             {loading ? (
               <p>Loading ...</p>
-            ) : (
-              results.map((result, index) => (
-                <div
-                  key={index}
-                  className={styles['search__dropdown__item']}
-                  onClick={() => {
-                    setResult(result);
-                    setActiveItem(index)
-                  }}
-                >
-                  <p className={activeItem === index ? styles['search__dropdown__item-active'] : ''}>{result.name}</p>
-                </div>
-              ))
-            )}
+            ) : renderList}
           </div>
         </div>
       </div>
