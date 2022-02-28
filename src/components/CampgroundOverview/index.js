@@ -28,7 +28,6 @@ const CampgroundOverview = (props) => {
       getCampground();
     }
   }, [selectedCampgroundId]);
-  console.log(error, '====> error <====');
 
   return (
     <div className={styles['overview']}>

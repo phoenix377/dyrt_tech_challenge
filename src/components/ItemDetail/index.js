@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./ItemDetail.module.scss";
+import React from 'react';
+import styles from './ItemDetail.module.scss';
 
 export const ItemDetail = (props) => {
   const {title, detail} = props;

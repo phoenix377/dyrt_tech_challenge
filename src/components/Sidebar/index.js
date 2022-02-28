@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { log } from '../../utils/logToAnalytics';
-
 import styles from './Sidebar.module.scss';
+import { useDebounce } from "../../hook/useDebounce";
 
 export const Sidebar = (props) => {
   const {
@@ -11,10 +11,12 @@ export const Sidebar = (props) => {
     query,
     setQuery,
   } = props;
+
   const [showMenu, setShowMenu] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState({});
   const [activeItem, setActiveItem] = useState(null);
+  const debouncedSearchTerm = useDebounce(query, 500);
 
   useEffect(() => {
     if (result) {
@@ -26,17 +28,24 @@ export const Sidebar = (props) => {
     setLoading(true);
     const res = await fetch(`https://staging.thedyrt.com/api/v5/autocomplete/campgrounds?q=${query}`);
     if (res.status === 200) {
-      const data = await res.json();
-      setResults(data);
+      const normalizeData = await res.json();
+      setResults(normalizeData);
     }
     setLoading(false);
   }
 
-  useEffect(() => {
-    if (query) {
-      fetchCampgrounds();
-    }
-  }, [query]);
+  useEffect(
+    () => {
+      setActiveItem(null)
+      if (query) {
+        fetchCampgrounds()
+      } else {
+        setResults(null);
+        setLoading(false);
+      }
+    },
+    [debouncedSearchTerm]
+  );
 
   const logToAnalytics = useCallback(() => {
     log('search-dropdown-enter', results);
@@ -84,6 +93,8 @@ export const Sidebar = (props) => {
               className={styles['search__input']}
               placeholder="Where would you like to camp?"
               onChange={(e) => {
+                setLoading(true)
+                setShowMenu(true);
                 setQuery(e.target.value);
               }}
               onClick={() => {
