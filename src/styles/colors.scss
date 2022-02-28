@@ -1,0 +1,49 @@
+// Palette - $c
+$cSand: #f8f6f4;
+$cMud: #3d3b3b;
+$cStone: #c4c4c4;
+$cMist: #e7eaef;
+$cRock: #6a6b6c;
+$cWine: #9b0d1a;
+$cClay: #e57150;
+$cOrange: #e07a1d;
+$cRust: #ca3f00;
+$cWheat: #eea83d;
+$cForrest: #1a4e3d;
+$cGreen: #26741e;
+$cPond: #397c70;
+$cDew: #30a38c;
+$cBerry: #920b66;
+
+// Brand - $cB
+$cBPrimary: $cClay;
+$cBSecondary: $cForrest;
+$cBPro: $cOrange;
+$cBProHover: darken($cBPro, 9%);
+
+// Neutrals - $cN
+$cNWhite: #ffffff;
+$cNOffWhite: $cSand;
+$cNBlack: #000000;
+$cNOffBlack: $cMud;
+$cNGrayLight: $cMist;
+$cNGray: $cStone;
+$cNGrayDark: $cRock;
+
+// Accents - $cA
+$cAAction: $cPond;
+$cAActionHover: darken($cPond, 9%);
+$cAActive: $cBerry;
+$cAActiveHover: darken($cBerry, 9%);
+$cASelection: lighten($cBerry, 65%);
+$cAInfo: $cDew;
+$cAInfoLight: lighten($cDew, 55%);
+$cAInfoBg: #f9fbfc;
+$cASuccess: $cGreen;
+$cASuccessLight: lighten($cGreen, 55%);
+$cAWarning: $cWheat;
+$cAWarningLight: lighten($cWheat, 55%);
+$cAError: $cWine;
+$cAErrorLight: lighten($cWine, 65%);
+$cAErrorHover: darken($cWine, 2%);
+$cAErrorBg: #ffeded;

@@ -1,0 +1,76 @@
+// Families
+@use 'sass:list';
+
+$montserrat: 'Montserrat', sans-serif;
+
+// Font Properties
+$baseFontSize: 16px;
+$baseLineHeight: 1.5;
+$primaryFont: $montserrat;
+$primaryFontWeightMd: 500;
+$primaryFontWeightSemiB: 600;
+$primaryFontWeightB: 700;
+
+$fBodyXs: $primaryFontWeightMd list.slash(0.75rem, $baseLineHeight) $primaryFont;
+$fBodySm: $primaryFontWeightMd list.slash(0.825rem, $baseLineHeight)
+  $primaryFont;
+$fBodyMd: $primaryFontWeightMd list.slash(1rem, $baseLineHeight) $primaryFont;
+$fBodyLg: $primaryFontWeightMd list.slash(1.25rem, $baseLineHeight) $primaryFont;
+
+$fTitleSm: $primaryFontWeightB 1.13rem / 1.38rem $primaryFont;
+$fTitleMd: $primaryFontWeightB 1rem / 1.25rem $primaryFont;
+
+@mixin fBody($size: 'md', $weight: 'normal') {
+  @if $size == 'xs' {
+    font: $fBodyXs;
+  }
+  @if $size == 'sm' {
+    font: $fBodySm;
+  }
+  @if $size == 'md' {
+    font: $fBodyMd;
+  }
+  @if $size == 'lg' {
+    font: $fBodyLg;
+  }
+
+  @if $weight == 'normal' {
+    font-weight: $primaryFontWeightMd;
+  }
+  @if $weight == 'semibold' {
+    font-weight: $primaryFontWeightSemiB;
+  }
+  @if $weight == 'bold' {
+    font-weight: $primaryFontWeightB;
+  }
+
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+@mixin fHeading($size: 'md') {
+  @if $size == 'sm' {
+    font: $fHeadingSm;
+
+    @media screen and (min-width: $bpLg) {
+      font-size: 2.25rem;
+      line-height: 3.13rem;
+    }
+  }
+  @if $size == 'md' {
+    font: $fHeadingMd;
+
+    @media screen and (min-width: $bpLg) {
+      font-size: 2.88rem;
+      line-height: 3.75rem;
+    }
+  }
+  @if $size == 'lg' {
+    font: $fHeadingLg;
+
+    @media screen and (min-width: $bpLg) {
+      font-size: 4rem;
+      line-height: 5.13rem;
+    }
+  }
+}

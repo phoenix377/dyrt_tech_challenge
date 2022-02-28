@@ -1,0 +1,14 @@
+@import '../../styles/styles.scss';
+
+.overview {
+  flex: 1;
+  padding: 5rem;
+}
+
+.overview__content {
+  background-color: $cNOffWhite;
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+}
