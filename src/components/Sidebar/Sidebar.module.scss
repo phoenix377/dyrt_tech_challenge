@@ -50,6 +50,9 @@
     left: 16px;
     max-height: calc(100% - 60px);
     overflow: scroll;
+    &:focus {
+      outline: none;
+    }
     &--active {
       display: block;
     }
@@ -58,9 +61,20 @@
       margin: 0.5rem 0;
       border-bottom: 1px solid $cMud;
 
+      &-active {
+        color: $cAActive;
+      }
+
       &:hover {
         background-color: $cMist;
       }
     }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .sidebar {
+    height: 40%;
+    width: 100%;
   }
 }

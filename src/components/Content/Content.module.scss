@@ -5,3 +5,9 @@
   height: calc(100vh - 150px);
   display: flex;
 }
+
+@media screen and (max-width: 1024px) {
+  .content {
+    flex-direction: column;
+  }
+}

@@ -14,6 +14,7 @@ export const Sidebar = (props) => {
   const [showMenu, setShowMenu] = useState(false);
   const [loading, setLoading] = useState();
   const [result, setResult] = useState();
+  const [activeItem, setActiveItem] = useState(null);
 
   useEffect(() => {
     if (result) {
@@ -45,6 +46,25 @@ export const Sidebar = (props) => {
     log('search-dropdown-enter', results);
   }, [results]);
 
+  const handleKeyDown = (e) => {
+    if(e.keyCode === 40 && activeItem === null) {
+      setActiveItem(() => {
+        setResult(results[0]);
+        return 0
+      });
+    } else if (e.keyCode === 38 && activeItem > 0) {
+      setActiveItem((prevActive) => {
+        setResult(results[prevActive - 1]);
+        return prevActive - 1;
+      })
+    } else if (e.keyCode === 40 && activeItem < results.length - 1) {
+      setActiveItem((prevActive) => {
+        setResult(results[prevActive + 1]);
+        return prevActive + 1;
+      })
+    }
+  };
+
   return (
     <div className={styles['sidebar']}>
       <div className={styles['sidebar__content']}>
@@ -59,6 +79,7 @@ export const Sidebar = (props) => {
               onClick={() => {
                 setShowMenu(!showMenu);
               }}
+              onKeyDown={handleKeyDown}
             />
           </div>
 
@@ -67,6 +88,8 @@ export const Sidebar = (props) => {
               showMenu ? styles['search__dropdown--active'] : undefined
             }`}
             onMouseEnter={logToAnalytics}
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
           >
             {loading ? (
               <p>Loading ...</p>
@@ -77,9 +100,10 @@ export const Sidebar = (props) => {
                   className={styles['search__dropdown__item']}
                   onClick={() => {
                     setResult(result);
+                    setActiveItem(index)
                   }}
                 >
-                  <p>{result.name}</p>
+                  <p className={activeItem === index ? styles['search__dropdown__item-active'] : ''}>{result.name}</p>
                 </div>
               ))
             )}
