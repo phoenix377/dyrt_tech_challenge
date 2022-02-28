@@ -6,8 +6,8 @@ import styles from './Content.module.scss';
 
 const Content = () => {
   const [selectedCampgroundId, setSelectedCampgroundId] = useState();
-  const [results, setResults] = useState([]);
-  const [query, setQuery] = useState();
+  const [results, setResults] = useState(null);
+  const [query, setQuery] = useState(null);
 
   return (
     <div className={styles['content']}>

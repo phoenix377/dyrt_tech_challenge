@@ -12,8 +12,8 @@ export const Sidebar = (props) => {
     setQuery,
   } = props;
   const [showMenu, setShowMenu] = useState(false);
-  const [loading, setLoading] = useState();
-  const [result, setResult] = useState();
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState({});
   const [activeItem, setActiveItem] = useState(null);
 
   useEffect(() => {
@@ -24,14 +24,10 @@ export const Sidebar = (props) => {
 
   const fetchCampgrounds = async () => {
     setLoading(true);
-    try {
-      const res = await fetch(`https://staging.thedyrt.com/api/v5/autocomplete/campgrounds?q=${query}`);
-      if (res.status === 200) {
-        const data = await res.json();
-        setResults(data);
-      }
-    } catch (e) {
-      console.log(e, '====> e <====');
+    const res = await fetch(`https://staging.thedyrt.com/api/v5/autocomplete/campgrounds?q=${query}`);
+    if (res.status === 200) {
+      const data = await res.json();
+      setResults(data);
     }
     setLoading(false);
   }
@@ -47,7 +43,7 @@ export const Sidebar = (props) => {
   }, [results]);
 
   const handleKeyDown = (e) => {
-    if(e.keyCode === 40 && activeItem === null) {
+    if (e.keyCode === 40 && activeItem === null) {
       setActiveItem(() => {
         setResult(results[0]);
         return 0
@@ -66,7 +62,7 @@ export const Sidebar = (props) => {
   };
 
   const renderList = useMemo(
-    () => results.map((result, index) => <div
+    () => results?.map((result, index) => <div
       key={index}
       className={styles['search__dropdown__item']}
       onClick={() => {
@@ -76,7 +72,7 @@ export const Sidebar = (props) => {
     >
       <p className={activeItem === index ? styles['search__dropdown__item-active'] : ''}>{result.name}</p>
     </div>),
-    [activeItem],
+    [activeItem, loading],
   );
 
   return (
@@ -105,9 +101,14 @@ export const Sidebar = (props) => {
             onKeyDown={handleKeyDown}
             tabIndex={0}
           >
-            {loading ? (
+            {loading === true ? (
               <p>Loading ...</p>
-            ) : renderList}
+            ) : results?.length ?
+              renderList :
+              query ?
+                <p>Items not found</p> :
+                <></>
+            }
           </div>
         </div>
       </div>
